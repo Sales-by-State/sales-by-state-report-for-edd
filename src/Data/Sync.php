@@ -69,7 +69,7 @@ class Sync {
 		$order_id = isset( $data['order_id'] ) ? (int) $data['order_id'] : 0;
 
 		if ( ! $order_id && function_exists( 'edd_get_order_address' ) ) {
-			$address = edd_get_order_address( (int) $address_id );
+			$address  = edd_get_order_address( (int) $address_id );
 			$order_id = $address && ! empty( $address->order_id ) ? (int) $address->order_id : 0;
 		}
 

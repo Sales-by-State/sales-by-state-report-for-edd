@@ -61,7 +61,12 @@ class Tools {
 		$counts    = Schema::counts();
 		$remaining = Backfill::remaining();
 		$url       = function_exists( 'edd_get_admin_url' )
-			? edd_get_admin_url( array( 'page' => 'edd-tools', 'tab' => 'sbsedd' ) )
+			? edd_get_admin_url(
+				array(
+					'page' => 'edd-tools',
+					'tab'  => 'sbsedd',
+				)
+			)
 			: admin_url( 'edit.php?post_type=download&page=edd-tools&tab=sbsedd' );
 		?>
 		<div class="postbox">
@@ -334,7 +339,12 @@ class Tools {
 	 */
 	private function tools_url() {
 		if ( function_exists( 'edd_get_admin_url' ) ) {
-			return edd_get_admin_url( array( 'page' => 'edd-tools', 'tab' => 'sbsedd' ) );
+			return edd_get_admin_url(
+				array(
+					'page' => 'edd-tools',
+					'tab'  => 'sbsedd',
+				)
+			);
 		}
 
 		return admin_url( 'edit.php?post_type=download&page=edd-tools&tab=sbsedd' );
