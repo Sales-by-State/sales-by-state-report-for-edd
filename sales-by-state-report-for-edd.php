@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:          Sales by State Report for Easy Digital Downloads
+ * Plugin Name:          Sales by State Report for Easy Digital Downloads (EDD)
  * Plugin URI:           https://salesbystate.com/
  * Description:          See a yearly breakdown of Easy Digital Downloads sales by state / county / province for a given country, filterable by order status.
  * Version:              1.0.0
@@ -10,8 +10,8 @@
  * Developer URI:        https://www.businessbloomer.com/
  * Text Domain:          sales-by-state-report-for-edd
  * Domain Path:          /languages
- * Requires at least:    6.7
- * Requires PHP:         8.0
+ * Requires at least:    6.4
+ * Requires PHP:         7.4
  * Requires Plugins:     easy-digital-downloads
  * EDD requires at least: 3.0
  * EDD tested up to:     3.7.0
