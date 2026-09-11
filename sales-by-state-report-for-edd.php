@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:          Sales by State Report for Easy Digital Downloads (EDD)
+ * Plugin Name:          Sales by State Report for EDD
  * Plugin URI:           https://salesbystate.com/
  * Description:          See a yearly breakdown of Easy Digital Downloads sales by state / county / province for a given country, filterable by order status.
  * Version:              1.0.0

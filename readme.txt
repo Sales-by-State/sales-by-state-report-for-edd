@@ -1,4 +1,4 @@
-=== Sales by State Report for Easy Digital Downloads (EDD) ===
+=== Sales by State Report for EDD ===
 Contributors: BusinessBloomer
 Donate link: https://salesbystate.com/
 Tags: sales-report, sales-by-state, easy-digital-downloads, edd, analytics
