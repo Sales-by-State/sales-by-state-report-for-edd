@@ -53,6 +53,13 @@ add_action(
 			add_action(
 				'admin_notices',
 				function () {
+					global $pagenow;
+
+					// Only on the Plugins screen, where the dependency can be acted on.
+					if ( 'plugins.php' !== $pagenow ) {
+						return;
+					}
+
 					if ( ! current_user_can( 'activate_plugins' ) ) {
 						return;
 					}
