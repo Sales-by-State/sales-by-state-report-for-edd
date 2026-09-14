@@ -130,7 +130,7 @@ class Tools {
 		}
 
 		$result = Backfill::run_batch( 1000 );
-		set_transient( 'sbsedd_tools_notice', $this->backfill_message( $result ), 30 );
+		set_transient( $this->notice_key(), $this->backfill_message( $result ), 30 );
 		wp_safe_redirect( $this->tools_url() );
 		exit;
 	}
@@ -148,7 +148,7 @@ class Tools {
 		Backfill::reset();
 		$result = Backfill::run_batch( 1000 );
 		set_transient(
-			'sbsedd_tools_notice',
+			$this->notice_key(),
 			sprintf(
 				/* translators: 1: orders processed, 2: orders remaining. */
 				__( 'Table emptied. Processed %1$s orders, %2$s remaining.', 'sales-by-state-report-for-edd' ),
@@ -167,13 +167,17 @@ class Tools {
 	 * @return void
 	 */
 	public function admin_notice() {
-		$notice = get_transient( 'sbsedd_tools_notice' );
+		if ( ! $this->is_tools_screen() || ! Plugin::can_manage() ) {
+			return;
+		}
+
+		$notice = get_transient( $this->notice_key() );
 
 		if ( ! $notice ) {
 			return;
 		}
 
-		delete_transient( 'sbsedd_tools_notice' );
+		delete_transient( $this->notice_key() );
 
 		printf(
 			'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
@@ -330,6 +334,29 @@ class Tools {
 		check_admin_referer( 'sbsedd_tools', 'sbsedd_tools_nonce' );
 
 		return true;
+	}
+
+	/**
+	 * Transient key for the current user's Tools notice.
+	 *
+	 * Keyed per user so the notice is only seen by whoever ran the tool.
+	 *
+	 * @return string
+	 */
+	private function notice_key() {
+		return 'sbsedd_tools_notice_' . get_current_user_id();
+	}
+
+	/**
+	 * Whether the Easy Digital Downloads Tools screen is showing.
+	 *
+	 * @return bool
+	 */
+	private function is_tools_screen() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- reading the current screen, not acting on it.
+		$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+
+		return 'edd-tools' === $page;
 	}
 
 	/**
