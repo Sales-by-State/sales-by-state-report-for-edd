@@ -5,7 +5,7 @@ Tags: sales-report, sales-by-state, easy-digital-downloads, edd, analytics
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,10 +101,16 @@ Use the [WordPress.org support forum](https://wordpress.org/support/plugin/sales
 
 == Changelog ==
 
+= 1.0.1 =
+* Fixed: the header on the Sales by State screen showed "Sbssales-by-state" instead of "Sales by State".
+
 = 1.0.0 =
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Fixes the title in the header of the Sales by State screen.
 
 = 1.0.0 =
 Initial release.

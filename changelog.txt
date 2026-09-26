@@ -1,4 +1,7 @@
 *** Sales by State Report for Easy Digital Downloads Changelog ***
 
+2026-09-26 - version 1.0.1
+* Fixed: the header on the Sales by State screen showed "Sbssales-by-state" instead of "Sales by State".
+
 2026-09-01 - version 1.0.0
 * Initial release.
