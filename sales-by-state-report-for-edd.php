@@ -3,7 +3,7 @@
  * Plugin Name:          Sales by State Report for EDD
  * Plugin URI:           https://salesbystate.com/
  * Description:          See a yearly breakdown of Easy Digital Downloads sales by state / county / province for a given country, filterable by order status.
- * Version:              1.0.0
+ * Version:              1.0.1
  * Author:               Rodolfo Melogli
  * Author URI:           https://www.businessbloomer.com/
  * Developer:            Rodolfo Melogli
@@ -24,7 +24,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SBSEDD_VERSION', '1.0.0' );
+define( 'SBSEDD_VERSION', '1.0.1' );
 define( 'SBSEDD_FILE', __FILE__ );
 define( 'SBSEDD_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SBSEDD_URL', plugin_dir_url( __FILE__ ) );
