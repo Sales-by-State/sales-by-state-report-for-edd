@@ -30,6 +30,20 @@ class Page {
 	public function register() {
 		add_action( 'admin_menu', array( $this, 'register_page' ), 99 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
+		add_filter( 'edd_settings_page_title', array( $this, 'header_title' ), 10, 2 );
+	}
+
+	/**
+	 * Give EDD's admin header the report's title.
+	 *
+	 * EDD builds the header from the page slug and strips "edd-", which turns this slug into "Sbssales-by-state".
+	 *
+	 * @param string $title Title EDD built.
+	 * @param string $page  Current page slug.
+	 * @return string
+	 */
+	public function header_title( $title, $page ) {
+		return self::SLUG === $page ? __( 'Sales by State', 'sales-by-state-report-for-edd' ) : $title;
 	}
 
 	/**
