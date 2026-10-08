@@ -7,6 +7,7 @@
 
 namespace SBSEDD\Admin;
 
+use SBSEDD\Data\Backfill;
 use SBSEDD\Filters;
 use SBSEDD\Plugin;
 
@@ -52,7 +53,7 @@ class Page {
 	 * @return void
 	 */
 	public function register_page() {
-		add_submenu_page(
+		$hook = add_submenu_page(
 			'edit.php?post_type=download',
 			__( 'Sales by State', 'sales-by-state-report-for-edd' ),
 			__( 'Sales by State', 'sales-by-state-report-for-edd' ),
@@ -60,6 +61,22 @@ class Page {
 			self::SLUG,
 			array( $this, 'render' )
 		);
+
+		if ( $hook ) {
+			add_action( 'load-' . $hook, array( $this, 'on_load' ) );
+		}
+	}
+
+	/**
+	 * Restart the import if the table was emptied behind the plugin's back.
+	 *
+	 * Lives here rather than on every request because the check counts the
+	 * store's orders, which grows with the store.
+	 *
+	 * @return void
+	 */
+	public function on_load() {
+		Backfill::heal_if_empty();
 	}
 
 	/**
