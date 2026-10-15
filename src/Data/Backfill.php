@@ -53,7 +53,7 @@ class Backfill {
 			$cursor = max( $cursor, (int) $id );
 		}
 
-		update_option( self::CURSOR_OPTION, $cursor, false );
+		update_option( self::CURSOR_OPTION, $cursor, true );
 
 		$remaining = OrderSource::count_after( $cursor );
 

@@ -33,14 +33,40 @@ class Schema {
 	/**
 	 * Install the table if the schema version has moved.
 	 *
+	 * Runs on every request, so the common case (installed and up to date)
+	 * must cost nothing: the version option is autoloaded and read from the
+	 * options WordPress already has in memory. The install, which also
+	 * restarts the import when the table is empty, only runs when that
+	 * version is missing or different: on first load, on an upgrade, or once
+	 * on sites where 1.0.x stored the option without autoload.
+	 *
 	 * @return void
 	 */
 	public static function maybe_install() {
-		if ( (int) get_option( self::VERSION_OPTION ) === self::DB_VERSION ) {
+		if ( self::is_current() ) {
 			return;
 		}
 
 		self::install();
+	}
+
+	/**
+	 * Whether the installed schema matches this build, without a query.
+	 *
+	 * An option stored without autoload is not in the loaded list, so it
+	 * counts as "not current" once, and install() then switches its autoload
+	 * on.
+	 *
+	 * @return bool
+	 */
+	private static function is_current() {
+		$alloptions = wp_load_alloptions();
+
+		if ( ! isset( $alloptions[ self::VERSION_OPTION ] ) ) {
+			return false;
+		}
+
+		return self::DB_VERSION === (int) $alloptions[ self::VERSION_OPTION ];
 	}
 
 	/**
@@ -88,7 +114,10 @@ class Schema {
 			delete_option( 'sbsedd_backfill_cursor' );
 		}
 
-		update_option( self::VERSION_OPTION, self::DB_VERSION, false );
+		update_option( self::VERSION_OPTION, self::DB_VERSION, true );
+
+		// update_option() leaves autoload alone when the value is unchanged.
+		wp_set_option_autoload( self::VERSION_OPTION, true );
 	}
 
 	/**
@@ -99,10 +128,20 @@ class Schema {
 	public static function table_exists() {
 		global $wpdb;
 
+		// Only a positive answer is remembered, so a check made before
+		// install() creates the table never sticks.
+		static $exists = false;
+
+		if ( $exists ) {
+			return true;
+		}
+
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		return (bool) $wpdb->get_var(
+		$exists = (bool) $wpdb->get_var(
 			$wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->prefix . 'sbsedd_order_state' )
 		);
+
+		return $exists;
 	}
 
 	/**

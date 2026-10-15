@@ -61,7 +61,6 @@ class Plugin {
 	 */
 	public function init() {
 		Install\Schema::maybe_install();
-		Data\Backfill::heal_if_empty();
 
 		( new Data\Sync() )->register();
 		( new Data\Scheduler() )->register();
