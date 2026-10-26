@@ -1,5 +1,8 @@
 *** Sales by State Report for Easy Digital Downloads Changelog ***
 
+2026-10-26 - version 1.0.2
+* Improved: the plugin no longer checks its report table on every page load, so it adds no database queries to the front end or admin once set up.
+
 2026-09-26 - version 1.0.1
 * Fixed: the header on the Sales by State screen showed "Sbssales-by-state" instead of "Sales by State".
 
