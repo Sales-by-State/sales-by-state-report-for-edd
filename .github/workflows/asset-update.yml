@@ -11,6 +11,8 @@ on:
 jobs:
   update_assets:
     name: Push readme/assets to WP.org
+    # Release merges change code too; the asset-only action refuses those, and deploy.yml ships them.
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '/release/') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
